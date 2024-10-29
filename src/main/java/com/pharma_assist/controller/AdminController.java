@@ -2,6 +2,7 @@ package com.pharma_assist.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,5 +29,12 @@ public class AdminController {
 	public ResponseEntity<ResponseStructure<AdminResponse>> updateAdmin(@Valid @RequestBody AdminRequest adminRequest) {
 		AdminResponse adminResponse = adminService.addAdmin(adminRequest);
 		return appResponseBuilder.success(HttpStatus.CREATED, "Admin Added", adminResponse);
+	}
+
+	@PostMapping("admin/{adminId}")
+	public ResponseEntity<ResponseStructure<AdminResponse>> updateAdmin(@RequestBody AdminRequest adminRequest,
+			@PathVariable String adminId) {
+		AdminResponse adminResponse = adminService.updateAdmin(adminRequest, adminId);
+		return appResponseBuilder.success(HttpStatus.OK, "Admin Updated", adminResponse);
 	}
 }
