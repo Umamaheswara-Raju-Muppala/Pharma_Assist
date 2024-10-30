@@ -1,9 +1,12 @@
 package com.pharma_assist.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.pharma_assist.entity.Admin;
 import com.pharma_assist.exceptions.AdminNotFoundException;
+import com.pharma_assist.exceptions.NoAdminsFoundException;
 import com.pharma_assist.mapper.AdminMapper;
 import com.pharma_assist.repository.AdminRepository;
 import com.pharma_assist.requests.AdminRequest;
@@ -35,5 +38,13 @@ public class AdminService {
 		return adminRepository.findById(adminId).map(adminMapper::adminToAdminResponse)
 				.orElseThrow(() -> new AdminNotFoundException("Admin Not Found"));
 
+	}
+
+	public List<AdminResponse> findAdmins() {
+		List<Admin> admin = adminRepository.findAll();
+		if (admin.isEmpty()) {
+			new NoAdminsFoundException("Admins Not Found");
+		}
+		return admin.stream().map(adminMapper::adminToAdminResponse).toList();
 	}
 }

@@ -1,5 +1,7 @@
 package com.pharma_assist.controller;
 
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -46,4 +48,10 @@ public class AdminController {
 		return appResponseBuilder.success(HttpStatus.FOUND, "Admin Found", adminResponse);
 	}
 
+	@GetMapping("admin")
+	public ResponseEntity<ResponseStructure<List<AdminResponse>>> findAdmins() {
+		List<AdminResponse> adminResponses = adminService.findAdmins();
+		return appResponseBuilder.success(HttpStatus.FOUND, "Admins Found", adminResponses);
+
+	}
 }
