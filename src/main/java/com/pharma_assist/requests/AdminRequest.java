@@ -13,7 +13,8 @@ public class AdminRequest {
 	private String adminPhNo;
 	@NotNull(message = "password cannot be null")
 	@NotBlank(message = "password is manditory")
-	@Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*])[A-Za-z\\d!@#$%^&*]{8,12}$", message = "Invalid password")
+	@Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*])[A-Za-z\\d!@#$%^&*]{8,12}$", message = "Password must be 8 to 12 characters long, contain at least one uppercase letter, one lowercase letter, one digit, and one special character (e.g., !@#$%^&*).\r\n"
+			+ "")
 	private String password;
 
 	public AdminRequest() {

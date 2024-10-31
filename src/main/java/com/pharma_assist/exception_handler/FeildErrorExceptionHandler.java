@@ -33,7 +33,7 @@ public class FeildErrorExceptionHandler extends ResponseEntityExceptionHandler {
 			errorResponses.add(feildErrorStructure);
 		}
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-				.body(ErrorStructure.create(HttpStatus.BAD_REQUEST.value(), "Invalid Input", errorResponses));
+				.body(ErrorStructure.create(HttpStatus.BAD_REQUEST.value(), "Invalid input provided", errorResponses));
 
 	}
 
