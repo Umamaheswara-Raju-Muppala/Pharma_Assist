@@ -2,6 +2,7 @@ package com.pharma_assist.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -43,6 +44,20 @@ public class PharmacyController {
 			@Valid @RequestBody PharmacyRequest pharmacyRequest, @PathVariable String adminId) {
 		PharmacyResponse pharmacyResponse = pharmacyService.addPharmacy(pharmacyRequest, adminId);
 		return appResponseBuilder.success(HttpStatus.CREATED, "Pharmacy Added Into Admin", pharmacyResponse);
+	}
+
+	@GetMapping("/admins/{adminId}/pharmacy")
+	@Operation(summary = "Find Pharmacy ", description = "This endpoint allows can fetch the Pharmacy using Admin Id", responses = {
+			@ApiResponse(responseCode = "302", description = "Pharmacy Found", content = {
+					@Content(schema = @Schema(implementation = PharmacyResponse.class)) }),
+			@ApiResponse(responseCode = "404", description = "Admin Not Found", content = {
+					@Content(schema = @Schema(implementation = ErrorStructure.class)) }),
+			@ApiResponse(responseCode = "404", description = "Pharmacy Not Found", content = {
+					@Content(schema = @Schema(implementation = ErrorStructure.class)) }) })
+	public ResponseEntity<ResponseStructure<PharmacyResponse>> findPharmacyByAdminId(@PathVariable String adminId) {
+		PharmacyResponse pharmacyResponse = pharmacyService.findPharmacyByAdminId(adminId);
+		return appResponseBuilder.success(HttpStatus.FOUND, "Pharmacy Found", pharmacyResponse);
+
 	}
 
 }
