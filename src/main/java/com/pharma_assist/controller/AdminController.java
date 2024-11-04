@@ -34,7 +34,7 @@ public class AdminController {
 		this.appResponseBuilder = appResponseBuilder;
 	}
 
-	@PostMapping("admin")
+	@PostMapping("admins")
 	@Operation(summary = "Add a new admin", description = "This endpoint allows you to add a new admin. The admin details are provided in the request body.", responses = {
 			@ApiResponse(responseCode = "201", description = "Admin Added Successfully", content = {
 					@Content(schema = @Schema(implementation = AdminResponse.class)) }),
@@ -42,12 +42,12 @@ public class AdminController {
 					@Content(schema = @Schema(implementation = ErrorStructure.class)) }),
 			@ApiResponse(responseCode = "500", description = "Internal server error", content = {
 					@Content(schema = @Schema(implementation = ErrorStructure.class)) }) })
-	public ResponseEntity<ResponseStructure<AdminResponse>> updateAdmin(@Valid @RequestBody AdminRequest adminRequest) {
+	public ResponseEntity<ResponseStructure<AdminResponse>> addAdmin(@Valid @RequestBody AdminRequest adminRequest) {
 		AdminResponse adminResponse = adminService.addAdmin(adminRequest);
 		return appResponseBuilder.success(HttpStatus.CREATED, "Admin Added", adminResponse);
 	}
 
-	@PutMapping("admin/{adminId}")
+	@PutMapping("admins/{adminId}")
 	@Operation(summary = "Update Existing Admin", description = "This endpoint allows you to update the admin using an admin id as a parameter and admin details as Reqest body.", responses = {
 			@ApiResponse(responseCode = "200", description = "Admin Updated", content = {
 					@Content(schema = @Schema(implementation = AdminResponse.class)) }),
@@ -61,7 +61,7 @@ public class AdminController {
 		return appResponseBuilder.success(HttpStatus.OK, "Admin Updated", adminResponse);
 	}
 
-	@GetMapping("admin/{adminId}")
+	@GetMapping("admins/{adminId}")
 	@Operation(summary = "Fetch Admin by Unique Admin Id", description = "This endpoint can fetch admin using admin id as a parameter", responses = {
 			@ApiResponse(responseCode = "302", description = "Admins Found", content = {
 					@Content(schema = @Schema(implementation = AdminResponse.class)) }),
@@ -73,7 +73,7 @@ public class AdminController {
 		return appResponseBuilder.success(HttpStatus.FOUND, "Admin Found", adminResponse);
 	}
 
-	@GetMapping("admin")
+	@GetMapping("admins")
 	@Operation(summary = "Fetch All Admins", description = "This endpoint can be used to fetch all admins", responses = {
 			@ApiResponse(responseCode = "302", description = "Admins Found", content = {
 					@Content(schema = @Schema(implementation = AdminResponse.class)) }),
