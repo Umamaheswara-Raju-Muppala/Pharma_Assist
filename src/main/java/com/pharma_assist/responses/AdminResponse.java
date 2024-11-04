@@ -1,9 +1,13 @@
 package com.pharma_assist.responses;
 
+import com.pharma_assist.entity.Pharmacy;
+
 public class AdminResponse {
 	private String adminId;
 	private String adminEmail;
 	private String adminPhNo;
+
+	private Pharmacy pharmacy;
 
 	public AdminResponse() {
 
@@ -14,6 +18,7 @@ public class AdminResponse {
 		this.adminId = adminId;
 		this.adminEmail = adminEmail;
 		this.adminPhNo = adminPhNo;
+
 	}
 
 	public String getAdminId() {

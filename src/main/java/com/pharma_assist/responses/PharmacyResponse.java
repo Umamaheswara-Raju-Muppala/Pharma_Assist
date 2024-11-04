@@ -1,21 +1,29 @@
-package com.pharma_assist.entity;
+package com.pharma_assist.responses;
 
-import com.pharma_assist.config.GenarateCustomId;
+public class PharmacyResponse {
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-
-@Entity
-public class Pharmacy {
-	@Id
-	@GenarateCustomId
 	private String pharmacyId;
 	private String name;
 	private String gstNo;
 	private String licenceNo;
 
+	public PharmacyResponse() {
+
+	}
+
+	public PharmacyResponse(String pharmacyId, String name, String gstNo, String licenceNo) {
+		this.pharmacyId = pharmacyId;
+		this.name = name;
+		this.gstNo = gstNo;
+		this.licenceNo = licenceNo;
+	}
+
 	public String getPharmacyId() {
 		return pharmacyId;
+	}
+
+	public void setPharmacyId(String pharmacyId) {
+		this.pharmacyId = pharmacyId;
 	}
 
 	public String getName() {
