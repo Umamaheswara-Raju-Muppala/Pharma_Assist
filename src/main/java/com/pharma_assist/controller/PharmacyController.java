@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -58,6 +59,20 @@ public class PharmacyController {
 		PharmacyResponse pharmacyResponse = pharmacyService.findPharmacyByAdminId(adminId);
 		return appResponseBuilder.success(HttpStatus.FOUND, "Pharmacy Found", pharmacyResponse);
 
+	}
+
+	@Operation(summary = "Update Pharmacy", description = "This endpoint allows to update the pharmacy using pharmacy Id", responses = {
+			@ApiResponse(responseCode = "200", description = "Pharmacy Updated", content = {
+					@Content(schema = @Schema(implementation = PharmacyResponse.class)) }),
+			@ApiResponse(responseCode = "404", description = "Pharmacy Not Found", content = {
+					@Content(schema = @Schema(implementation = ErrorStructure.class)) }),
+			@ApiResponse(responseCode = "400", description = "Invalid input provided", content = {
+					@Content(schema = @Schema(implementation = ErrorStructure.class)) }) })
+	@PutMapping("/pharmacies/{pharmacyId}")
+	public ResponseEntity<ResponseStructure<PharmacyResponse>> UpdatePharmacyByPharmacyId(
+			@Valid @RequestBody PharmacyRequest pharmacyRequest, @PathVariable String pharmacyId) {
+		PharmacyResponse pharmacyResponse = pharmacyService.UpdatePharmacyByPharmacyId(pharmacyRequest, pharmacyId);
+		return appResponseBuilder.success(HttpStatus.OK, "Pharmacy Updated", pharmacyResponse);
 	}
 
 }
