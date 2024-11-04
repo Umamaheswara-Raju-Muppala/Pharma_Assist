@@ -1,13 +1,9 @@
 package com.pharma_assist.responses;
 
-import com.pharma_assist.entity.Pharmacy;
-
 public class AdminResponse {
 	private String adminId;
 	private String adminEmail;
 	private String adminPhNo;
-
-	private Pharmacy pharmacy;
 
 	public AdminResponse() {
 

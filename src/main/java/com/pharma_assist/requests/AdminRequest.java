@@ -1,6 +1,5 @@
 package com.pharma_assist.requests;
 
-import com.pharma_assist.entity.Pharmacy;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
