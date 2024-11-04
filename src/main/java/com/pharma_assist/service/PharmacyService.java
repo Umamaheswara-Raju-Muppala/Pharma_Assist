@@ -3,11 +3,13 @@ package com.pharma_assist.service;
 import java.util.Map;
 import java.util.Optional;
 
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
 import com.pharma_assist.entity.Admin;
 import com.pharma_assist.entity.Pharmacy;
 import com.pharma_assist.exceptions.AdminNotFoundException;
+import com.pharma_assist.exceptions.PharmacyNotFoundException;
 import com.pharma_assist.mapper.PharmacyMapper;
 import com.pharma_assist.repository.AdminRepository;
 import com.pharma_assist.repository.PharmacyRepository;
@@ -38,6 +40,14 @@ public class PharmacyService {
 			throw new AdminNotFoundException("Admin Not Found");
 		});
 		return pharmacyMapper.pharmacyToPharmacyResponse(pharmacy);
+	}
+
+	public PharmacyResponse findPharmacyByAdminId(String adminId) {
+		Admin admin = adminRepository.findById(adminId).orElseThrow(() -> new AdminNotFoundException("lkaedj"));
+		if (admin.getPharmacy() == null) {
+			throw new PharmacyNotFoundException("Pharmacy Not Found");
+		}
+		return pharmacyMapper.pharmacyToPharmacyResponse(admin.getPharmacy());
 	}
 
 }
