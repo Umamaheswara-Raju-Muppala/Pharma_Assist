@@ -1,34 +1,27 @@
-package com.pharma_assist.entity;
+package com.pharma_assist.requests;
 
 import java.time.LocalDate;
 
-import com.pharma_assist.config.GenarateCustomId;
 import com.pharma_assist.enums.Gender;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 
-@Entity
-public class Patient {
-	@Id
-	@GenarateCustomId
-	private String patientId;
+public class PatientRequest {
+	@NotBlank(message = "Name cannot be blank")
 	private String name;
+	@NotBlank(message = "Phone number must not be blank")
+	@Pattern(regexp = "^(6|7|8|9)[0-9]{9}$", message = "Phone number must be between 6000000000 and 9999999999")
 	private String phoneNumber;
+	@NotBlank(message = "email id cannot be empty")
+	@Pattern(regexp = "^[a-zA-Z0-9._%+-]+@gmail\\.com$", message = "Invalid email id")
 	private String email;
+	@NotNull(message = "Gender must not be null")
 	private Gender gender;
+	@NotNull(message = "Date of birth must not be null")
+
 	private LocalDate dateOfBirth;
-	@ManyToOne
-	Pharmacy pharmacy;
-
-	public String getPatientId() {
-		return patientId;
-	}
-
-	public void setPatientId(String patientId) {
-		this.patientId = patientId;
-	}
 
 	public String getName() {
 		return name;
@@ -68,14 +61,6 @@ public class Patient {
 
 	public void setDateOfBirth(LocalDate dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
-	}
-
-	public Pharmacy getPharmacy() {
-		return pharmacy;
-	}
-
-	public void setPharmacy(Pharmacy pharmacy) {
-		this.pharmacy = pharmacy;
 	}
 
 }
