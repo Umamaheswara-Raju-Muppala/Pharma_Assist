@@ -1,26 +1,31 @@
-package com.pharma_assist.entity;
+package com.pharma_assist.responses;
 
 import java.time.LocalDate;
 
-import com.pharma_assist.config.GenarateCustomId;
 import com.pharma_assist.enums.Gender;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-
-@Entity
-public class Patient {
-	@Id
-	@GenarateCustomId
+public class PatientResponse {
 	private String patientId;
 	private String name;
 	private String phoneNumber;
 	private String email;
 	private Gender gender;
 	private LocalDate dateOfBirth;
-	@ManyToOne
-	Pharmacy pharmacy;
+
+	public PatientResponse() {
+
+	}
+
+	public PatientResponse(String patientId, String name, String phoneNumber, String email, Gender gender,
+			LocalDate dateOfBirth) {
+		super();
+		this.patientId = patientId;
+		this.name = name;
+		this.phoneNumber = phoneNumber;
+		this.email = email;
+		this.gender = gender;
+		this.dateOfBirth = dateOfBirth;
+	}
 
 	public String getPatientId() {
 		return patientId;
@@ -69,13 +74,4 @@ public class Patient {
 	public void setDateOfBirth(LocalDate dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
 	}
-
-	public Pharmacy getPharmacy() {
-		return pharmacy;
-	}
-
-	public void setPharmacy(Pharmacy pharmacy) {
-		this.pharmacy = pharmacy;
-	}
-
 }
