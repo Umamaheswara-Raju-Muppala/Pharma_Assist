@@ -1,8 +1,10 @@
 package com.pharma_assist.controller;
 
+import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -45,5 +47,17 @@ public class PatientController {
 			@Valid @RequestBody PatientRequest patientRequest, @PathVariable String pharmacyId) {
 		PatientResponse patientResponse = patientService.addPatient(patientRequest, pharmacyId);
 		return appResponseBuilder.success(HttpStatus.CREATED, "Patient Created", patientResponse);
+	}
+
+	@GetMapping("/pharmacies/{pharmacyId}")
+	@Operation(summary = "Fetch All Patients in Pharmacy", description = "This endpoint can be used to fetch all Patients in pharmacy using pharmacy id", responses = {
+			@ApiResponse(responseCode = "302", description = "Patients Found", content = {
+					@Content(schema = @Schema(implementation = AdminResponse.class)) }),
+			@ApiResponse(responseCode = "404", description = "Patients Not Found", content = {
+					@Content(schema = @Schema(implementation = ErrorStructure.class)) }) })
+	public ResponseEntity<ResponseStructure<List<PatientResponse>>> findAllPatientsByPharmacyId(
+			@PathVariable String pharmacyId) {
+		List<PatientResponse> patients = patientService.findAllPatientsByPharmacyId(pharmacyId);
+		return appResponseBuilder.success(HttpStatus.FOUND, "Patients Found", patients);
 	}
 }
