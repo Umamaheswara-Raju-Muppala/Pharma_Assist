@@ -17,7 +17,9 @@ public class Pharmacy {
 	private String gstNo;
 	private String licenceNo;
 	@OneToMany(mappedBy = "pharmacy")
-	List<Patient> patient;
+	private List<Patient> patient;
+	@OneToMany(mappedBy="pharmacy")
+	private List<Medicine> medicine;
 
 	public String getPharmacyId() {
 		return pharmacyId;
@@ -54,5 +56,14 @@ public class Pharmacy {
 	public void setPatient(List<Patient> patient) {
 		this.patient = patient;
 	}
+
+	public List<Medicine> getMedicine() {
+		return medicine;
+	}
+
+	public void setMedicine(List<Medicine> medicine) {
+		this.medicine = medicine;
+	}
+	
 
 }

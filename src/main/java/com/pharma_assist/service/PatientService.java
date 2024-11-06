@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import com.pharma_assist.entity.Patient;
 import com.pharma_assist.entity.Pharmacy;
 import com.pharma_assist.exceptions.NoPatientsFoundException;
-import com.pharma_assist.exceptions.PatientNotFoundException;
 import com.pharma_assist.exceptions.PharmacyNotFoundException;
 import com.pharma_assist.mapper.PatientMapper;
 import com.pharma_assist.repository.PatientRepository;
