@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import com.pharma_assist.entity.Patient;
 import com.pharma_assist.entity.Pharmacy;
 import com.pharma_assist.exceptions.NoPatientsFoundException;
+import com.pharma_assist.exceptions.PatientNotFoundException;
 import com.pharma_assist.exceptions.PharmacyNotFoundException;
 import com.pharma_assist.mapper.PatientMapper;
 import com.pharma_assist.repository.PatientRepository;
@@ -48,4 +49,12 @@ public class PatientService {
 		return patientMapper.patientToPatientResponse(patientRepository.save(patient));
 
 	}
+
+	public PatientResponse updatePatientByPatientId(PatientRequest patientRequest, String patientId) {
+		return patientRepository.findById(patientId)
+				.map(exPatient -> patientMapper.patientRequestToPatient(patientRequest, exPatient))
+				.map(patientRepository::save).map(patientMapper::patientToPatientResponse)
+				.orElseThrow(() -> new PatientNotFoundException("Patient Not Found"));
+	}
+
 }
