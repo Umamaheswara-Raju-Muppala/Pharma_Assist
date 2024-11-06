@@ -1,9 +1,11 @@
 package com.pharma_assist.exceptions;
 @SuppressWarnings("serial")
-public class PatientNotFoundException extends RuntimeException {
+public class InvalidFormException extends RuntimeException {
+
 	private String message;
 
-	public PatientNotFoundException(String message) {
+	public InvalidFormException(String message) {
+		super();
 		this.message = message;
 	}
 

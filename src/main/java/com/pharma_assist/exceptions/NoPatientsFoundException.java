@@ -1,5 +1,5 @@
 package com.pharma_assist.exceptions;
-
+@SuppressWarnings("serial")
 public class NoPatientsFoundException extends RuntimeException {
 	private String message;
 
