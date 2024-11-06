@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -59,5 +60,19 @@ public class PatientController {
 			@PathVariable String pharmacyId) {
 		List<PatientResponse> patients = patientService.findAllPatientsByPharmacyId(pharmacyId);
 		return appResponseBuilder.success(HttpStatus.FOUND, "Patients Found", patients);
+	}
+
+	@PutMapping("/patients/{patientId}")
+	@Operation(summary = "Update Existing Patient", description = "This endpoint allows you to update the patient using an patient id as a parameter and patient details as Request body.", responses = {
+			@ApiResponse(responseCode = "200", description = "Patient Updated", content = {
+					@Content(schema = @Schema(implementation = AdminResponse.class)) }),
+			@ApiResponse(responseCode = "404", description = "Patient Not Found", content = {
+					@Content(schema = @Schema(implementation = ErrorStructure.class)) }),
+			@ApiResponse(responseCode = "500", description = "Invalid input Provided", content = {
+					@Content(schema = @Schema(implementation = ErrorStructure.class)) }) })
+	public ResponseEntity<ResponseStructure<PatientResponse>> updatePatientByPatientId(
+			@Valid @RequestBody PatientRequest patientRequest, @PathVariable String patientId) {
+		PatientResponse patientResponse = patientService.updatePatientByPatientId(patientRequest, patientId);
+		return appResponseBuilder.success(HttpStatus.OK, "Patient Updated", patientResponse);
 	}
 }
