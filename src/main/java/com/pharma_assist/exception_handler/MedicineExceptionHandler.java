@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.pharma_assist.exceptions.InvalidFormException;
+import com.pharma_assist.exceptions.NoMedicinesFoundException;
 import com.pharma_assist.utiliy.AppResponseBuilder;
 import com.pharma_assist.utiliy.ErrorStructure;
 
@@ -20,6 +21,11 @@ public class MedicineExceptionHandler {
 	@ExceptionHandler(InvalidFormException.class)
 	public ResponseEntity<ErrorStructure<String>> handleInvalidFormException(InvalidFormException exception) {
 		return appResponseBuilder.error(HttpStatus.BAD_REQUEST, exception.getMessage(), "Unavailable Form Enum Type");
+	}
+
+	@ExceptionHandler(NoMedicinesFoundException.class)
+	public ResponseEntity<ErrorStructure<String>> handleNoMedicinesFoundException(NoMedicinesFoundException exception) {
+		return appResponseBuilder.error(HttpStatus.NOT_FOUND, exception.getMessage(), "No Medicines Found");
 	}
 
 }

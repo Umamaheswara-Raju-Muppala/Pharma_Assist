@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import com.pharma_assist.enums.Form;
 import com.pharma_assist.exceptions.InvalidFormException;
+import com.pharma_assist.exceptions.NoMedicinesFoundException;
 import com.pharma_assist.exceptions.PharmacyNotFoundException;
 import com.pharma_assist.entity.Medicine;
 import com.pharma_assist.entity.Pharmacy;
@@ -21,6 +22,7 @@ import com.pharma_assist.mapper.MedicineMapper;
 import com.pharma_assist.repository.MedicineRepository;
 import com.pharma_assist.repository.PharmacyRepository;
 import com.pharma_assist.requests.MedicineRequest;
+import com.pharma_assist.responses.MedicineResponse;
 
 @Service
 @Transactional
@@ -75,6 +77,12 @@ public class MedicineService {
 		return "Medicines added Suucessfully";
 	}
 
-	
+	public List<MedicineResponse> findMedicineByNameOrDosage(String name, int dosageInMg) {
+		List<Medicine> medicines = medicineRepository.findMedicineByNameOrDosage(name, dosageInMg);
+		if (medicines.isEmpty()) {
+			throw new NoMedicinesFoundException("Medicines Not Found");
+		}
+		return medicines.stream().map(medicineMapper::medicneToMedicineResponse).toList();
+	}
 
 }
