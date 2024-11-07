@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.pharma_assist.responses.MedicineResponse;
-import com.pharma_assist.responses.PharmacyResponse;
 import com.pharma_assist.service.MedicineService;
 import com.pharma_assist.utiliy.AppResponseBuilder;
 import com.pharma_assist.utiliy.ErrorStructure;
@@ -51,15 +50,15 @@ public class MedicineController {
 
 	}
 
-	@GetMapping("/medicines/{name}/{dosageInMg}")
-	@Operation(summary = "Find Medicines", description = "Fetches a list of medicines based on the medicine's name or dosage in mg.", responses = {
+	@GetMapping("/medicines/{name}/{ingredients}")
+	@Operation(summary = "Find Medicines", description = "Fetches a list of medicines based on the medicine's name or with ingredients.", responses = {
 			@ApiResponse(responseCode = "302", description = "Medicine's Found", content = {
 					@Content(schema = @Schema(implementation = MedicineResponse.class)) }),
 			@ApiResponse(responseCode = "404", description = "Medicine's Not Found", content = {
 					@Content(schema = @Schema(implementation = ErrorStructure.class)) }), })
 	public ResponseEntity<ResponseStructure<List<MedicineResponse>>> findMedicineByNameOrDosage(
-			@PathVariable String name, @PathVariable int dosageInMg) {
-		List<MedicineResponse> medicineResponse = medicineService.findMedicineByNameOrDosage(name, dosageInMg);
+			@PathVariable String name,@PathVariable String ingredients) {
+		List<MedicineResponse> medicineResponse = medicineService.findMedicineByNameOrDosage(name,ingredients);
 		return appResponseBuilder.success(HttpStatus.FOUND, "Medicines Found", medicineResponse);
 	}
 
