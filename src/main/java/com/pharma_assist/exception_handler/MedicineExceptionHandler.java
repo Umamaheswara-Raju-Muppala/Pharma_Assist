@@ -1,5 +1,7 @@
 package com.pharma_assist.exception_handler;
 
+import java.time.format.DateTimeParseException;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -28,4 +30,18 @@ public class MedicineExceptionHandler {
 		return appResponseBuilder.error(HttpStatus.NOT_FOUND, exception.getMessage(), "No Medicines Found");
 	}
 
+	@ExceptionHandler(IllegalStateException.class)
+	public ResponseEntity<ErrorStructure<String>> handleIllegalStateException(IllegalStateException exception) {
+		return appResponseBuilder.error(HttpStatus.BAD_REQUEST, exception.getMessage(), "Invalid Input Provided");
+	}
+
+	@ExceptionHandler(NullPointerException.class)
+	public ResponseEntity<ErrorStructure<String>> handleNullPointerException(NullPointerException exception) {
+		return appResponseBuilder.error(HttpStatus.BAD_REQUEST, exception.getMessage(), "Invalid Input Provided");
+	}
+
+	@ExceptionHandler(DateTimeParseException.class)
+	public ResponseEntity<ErrorStructure<String>> handleDateTimeParseException(DateTimeParseException exception) {
+		return appResponseBuilder.error(HttpStatus.BAD_REQUEST, exception.getMessage(), "Invalid Input Provided");
+	}
 }
