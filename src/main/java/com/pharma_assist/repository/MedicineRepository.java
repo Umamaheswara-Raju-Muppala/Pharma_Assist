@@ -8,6 +8,7 @@ import com.pharma_assist.entity.Medicine;
 
 public interface MedicineRepository extends JpaRepository<Medicine, String> {
 
-	public List<Medicine> findByNameIgnoreCaseContainingOrIngredientsIgnoreCaseContaining(String name,String ingredients);
+	public List<Medicine> findByNameLikeIgnoreCaseOrIngredientsLikeIgnoreCase(String name,
+			String ingredients);
 
 }

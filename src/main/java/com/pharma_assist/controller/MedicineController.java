@@ -50,15 +50,16 @@ public class MedicineController {
 
 	}
 
-	@GetMapping("/medicines/{name}/{ingredients}")
+	@GetMapping("/medicines/{name}")
 	@Operation(summary = "Find Medicines", description = "Fetches a list of medicines based on the medicine's name or with ingredients.", responses = {
 			@ApiResponse(responseCode = "302", description = "Medicine's Found", content = {
 					@Content(schema = @Schema(implementation = MedicineResponse.class)) }),
 			@ApiResponse(responseCode = "404", description = "Medicine's Not Found", content = {
 					@Content(schema = @Schema(implementation = ErrorStructure.class)) }), })
-	public ResponseEntity<ResponseStructure<List<MedicineResponse>>> findMedicineByNameOrDosage(
-			@PathVariable String name,@PathVariable String ingredients) {
-		List<MedicineResponse> medicineResponse = medicineService.findMedicineByNameOrDosage(name,ingredients);
+	public ResponseEntity<ResponseStructure<List<MedicineResponse>>> findMedicine(
+			@PathVariable String name) {
+		List<MedicineResponse> medicineResponse = medicineService
+				.findByNameLikeIgnoreCaseOrIngredientsLikeIgnoreCase(name);
 		return appResponseBuilder.success(HttpStatus.FOUND, "Medicines Found", medicineResponse);
 	}
 
