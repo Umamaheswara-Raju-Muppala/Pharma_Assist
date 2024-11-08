@@ -61,9 +61,9 @@ public class MedicineService {
 		return "Medicines added Suucessfully";
 	}
 
-	public List<MedicineResponse> findByNameIgnoreCaseContainingOrIngredientsIgnoreCaseContaining(String name, String ingredients) {
+	public List<MedicineResponse> findByNameLikeIgnoreCaseOrIngredientsLikeIgnoreCase(String name) {
 		List<Medicine> medicines = medicineRepository
-				.findByNameIgnoreCaseContainingOrIngredientsIgnoreCaseContaining(name, ingredients);
+				.findByNameLikeIgnoreCaseOrIngredientsLikeIgnoreCase("%"+name+"%","%"+name+"%");
 		if (medicines.isEmpty()) {
 			throw new NoMedicinesFoundException("Medicines Not Found");
 		}
