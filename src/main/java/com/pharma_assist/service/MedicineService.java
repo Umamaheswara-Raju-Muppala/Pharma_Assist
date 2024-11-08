@@ -61,7 +61,7 @@ public class MedicineService {
 		return "Medicines added Suucessfully";
 	}
 
-	public List<MedicineResponse> findMedicineByNameOrDosage(String name, String ingredients) {
+	public List<MedicineResponse> findByNameIgnoreCaseContainingOrIngredientsIgnoreCaseContaining(String name, String ingredients) {
 		List<Medicine> medicines = medicineRepository
 				.findByNameIgnoreCaseContainingOrIngredientsIgnoreCaseContaining(name, ingredients);
 		if (medicines.isEmpty()) {

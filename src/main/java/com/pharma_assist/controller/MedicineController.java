@@ -57,8 +57,9 @@ public class MedicineController {
 			@ApiResponse(responseCode = "404", description = "Medicine's Not Found", content = {
 					@Content(schema = @Schema(implementation = ErrorStructure.class)) }), })
 	public ResponseEntity<ResponseStructure<List<MedicineResponse>>> findMedicineByNameOrDosage(
-			@PathVariable String name,@PathVariable String ingredients) {
-		List<MedicineResponse> medicineResponse = medicineService.findMedicineByNameOrDosage(name,ingredients);
+			@PathVariable String name, @PathVariable String ingredients) {
+		List<MedicineResponse> medicineResponse = medicineService
+				.findByNameIgnoreCaseContainingOrIngredientsIgnoreCaseContaining(name, ingredients);
 		return appResponseBuilder.success(HttpStatus.FOUND, "Medicines Found", medicineResponse);
 	}
 
