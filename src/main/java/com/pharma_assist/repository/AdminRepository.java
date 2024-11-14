@@ -12,4 +12,6 @@ public interface AdminRepository extends JpaRepository<Admin, String> {
 	@Query("select a.pharmacy from Admin a where a.adminId=:adminId")
 	Optional<Pharmacy> findPharmacyByAdminId(String adminId);
 
+	public Optional<Admin> findByAdminEmail(String email);
+
 }

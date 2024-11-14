@@ -2,6 +2,7 @@ package com.pharma_assist.service;
 
 import java.util.List;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.pharma_assist.entity.Admin;
@@ -14,18 +15,20 @@ import com.pharma_assist.responses.AdminResponse;
 
 @Service
 public class AdminService {
+	private final PasswordEncoder passwordEncoder;
 	private final AdminMapper adminMapper;
 	private final AdminRepository adminRepository;
 
-	public AdminService(AdminMapper adminMapper, AdminRepository adminRepository) {
+	public AdminService(AdminMapper adminMapper, AdminRepository adminRepository, PasswordEncoder passwordEncoder) {
 		this.adminMapper = adminMapper;
 		this.adminRepository = adminRepository;
-
+		this.passwordEncoder = passwordEncoder;
 	}
 
 	public AdminResponse addAdmin(AdminRequest adminRequest) {
-		Admin admin = adminRepository.save(adminMapper.adminRequestToAdmin(adminRequest, new Admin()));
-		return adminMapper.adminToAdminResponse(admin);
+		Admin admin = adminMapper.adminRequestToAdmin(adminRequest, new Admin());
+		admin.setPassword(passwordEncoder.encode(admin.getPassword()));
+		return adminMapper.adminToAdminResponse(adminRepository.save(admin));
 	}
 
 	public AdminResponse updateAdmin(AdminRequest adminRequest, String adminId) {
