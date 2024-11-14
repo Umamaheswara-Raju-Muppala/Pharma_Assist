@@ -6,6 +6,8 @@ import com.pharma_assist.config.GenarateCustomId;
 import com.pharma_assist.enums.Gender;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 
@@ -17,6 +19,7 @@ public class Patient {
 	private String name;
 	private String phoneNumber;
 	private String email;
+	@Enumerated(EnumType.STRING)
 	private Gender gender;
 	private LocalDate dateOfBirth;
 	@ManyToOne

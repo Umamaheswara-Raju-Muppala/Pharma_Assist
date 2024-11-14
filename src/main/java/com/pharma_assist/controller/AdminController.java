@@ -34,7 +34,7 @@ public class AdminController {
 		this.appResponseBuilder = appResponseBuilder;
 	}
 
-	@PostMapping("admins")
+	@PostMapping("register")
 	@Operation(summary = "Add a new admin", description = "This endpoint allows you to add a new admin. The admin details are provided in the request body.", responses = {
 			@ApiResponse(responseCode = "201", description = "Admin Added Successfully", content = {
 					@Content(schema = @Schema(implementation = AdminResponse.class)) }),

@@ -2,6 +2,7 @@ package com.pharma_assist.exception_handler;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -26,6 +27,12 @@ public class AdminExceptionHandler {
 	@ExceptionHandler(NoAdminsFoundException.class)
 	public ResponseEntity<ErrorStructure<String>> handlerNoAdminsFoundException(NoAdminsFoundException exception) {
 		return appResponseBuilder.error(HttpStatus.NOT_FOUND, exception.getMessage(), "Admins Not Found");
+	}
+
+	@ExceptionHandler(UsernameNotFoundException.class)
+	public ResponseEntity<ErrorStructure<String>> handlerUsernameNotFoundException(
+			UsernameNotFoundException exception) {
+		return appResponseBuilder.error(HttpStatus.NOT_FOUND, exception.getMessage(), "Username not found");
 	}
 
 }
