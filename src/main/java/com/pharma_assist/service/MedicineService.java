@@ -3,6 +3,7 @@ package com.pharma_assist.service;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -63,7 +64,7 @@ public class MedicineService {
 
 	public List<MedicineResponse> findByNameLikeIgnoreCaseOrIngredientsLikeIgnoreCase(String name) {
 		List<Medicine> medicines = medicineRepository
-				.findByNameLikeIgnoreCaseOrIngredientsLikeIgnoreCase("%"+name+"%","%"+name+"%");
+				.findByNameLikeIgnoreCaseOrIngredientsLikeIgnoreCase("%" + name + "%", "%" + name + "%");
 		if (medicines.isEmpty()) {
 			throw new NoMedicinesFoundException("Medicines Not Found");
 		}

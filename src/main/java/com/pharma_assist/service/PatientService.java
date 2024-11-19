@@ -1,5 +1,6 @@
 package com.pharma_assist.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -47,7 +48,12 @@ public class PatientService {
 		Patient patient = patientMapper.patientRequestToPatient(patientRequest, new Patient());
 
 		patient.setPharmacy(pharmacy);
-		pharmacy.getPatient().add(patient);
+		if (pharmacy.getPatient() != null) {
+			pharmacy.getPatient().add(patient);
+		} else {
+			pharmacy.setPatient(new ArrayList<Patient>());
+			pharmacy.getPatient().add(patient);
+		}
 		pharmacyRepository.save(pharmacy);
 		return patientMapper.patientToPatientResponse(patientRepository.save(patient));
 
