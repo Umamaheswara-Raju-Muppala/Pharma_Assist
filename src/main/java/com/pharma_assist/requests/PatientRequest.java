@@ -4,8 +4,6 @@ import java.time.LocalDate;
 
 import com.pharma_assist.enums.Gender;
 
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;

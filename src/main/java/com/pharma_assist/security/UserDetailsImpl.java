@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.pharma_assist.entity.Admin;
 
+@SuppressWarnings("serial")
 public class UserDetailsImpl implements UserDetails {
 	private final Admin admin;
 

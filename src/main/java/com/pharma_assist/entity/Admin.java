@@ -2,8 +2,10 @@ package com.pharma_assist.entity;
 
 import com.pharma_assist.config.GenarateCustomId;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 
 @Entity
@@ -15,7 +17,8 @@ public class Admin {
 	private String adminPhNo;
 	private String password;
 
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "pharmacy_id")
 	private Pharmacy pharmacy;
 
 	public Admin() {
