@@ -2,7 +2,9 @@ package com.pharma_assist.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pharma_assist.service.CartService;
@@ -14,7 +16,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
 @RestController
 public class CartController {
@@ -33,6 +34,27 @@ public class CartController {
 					@Content(schema = @Schema(implementation = ErrorStructure.class)) }) })
 	public ResponseEntity<SimpleResponseStructure> createCart() {
 		return appResponseBuilder.success(HttpStatus.CREATED, "Cart Created", cartService.createCart());
+	}
+
+	@PostMapping("/cart/{cartId}/medicine/{medicineId}")
+	@Operation(summary = "Add Items into Cart", description = "This endpoint allows us to add Items(Medicines) into a Cart", responses = {
+
+			@ApiResponse(responseCode = "201", description = "Item Added into Cart", content = {
+					@Content(schema = @Schema(implementation = String.class)) }),
+			@ApiResponse(responseCode = "404", description = "Cart Not Found or Invalid Cart ID", content = {
+					@Content(schema = @Schema(implementation = ErrorStructure.class)) }),
+			@ApiResponse(responseCode = "404", description = "Medicine Found or Invalid Medicine Id ", content = {
+					@Content(schema = @Schema(implementation = ErrorStructure.class)) }),
+			@ApiResponse(responseCode = "400", description = "Insufficieant Stock. Available {Existed Stock Quantity} Please choose less then or equal quantity that exits in stock", content = {
+					@Content(schema = @Schema(implementation = ErrorStructure.class)) }),
+			@ApiResponse(responseCode = "500", description = "Internal server error", content = {
+					@Content(schema = @Schema(implementation = ErrorStructure.class)) }) })
+
+	public ResponseEntity<SimpleResponseStructure> addItemIntoCart(@PathVariable String cartId,
+			@PathVariable String medicineId, @RequestParam int quantity) {
+		return appResponseBuilder.success(HttpStatus.CREATED, "Item Added into Cart",
+				cartService.addItemIntoCart(cartId, medicineId, quantity));
+
 	}
 
 }
