@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.pharma_assist.entity.Cart;
 import com.pharma_assist.service.CartService;
 import com.pharma_assist.utiliy.AppResponseBuilder;
 import com.pharma_assist.utiliy.ErrorStructure;
@@ -36,7 +37,7 @@ public class CartController {
 		return appResponseBuilder.success(HttpStatus.CREATED, "Cart Created", cartService.createCart());
 	}
 
-	@PostMapping("/cart/{cartId}/medicine/{medicineId}")
+	@PostMapping("/cart/{cartId}/medicine/{medicineId}/add")
 	@Operation(summary = "Add Items into Cart", description = "This endpoint allows us to add Items(Medicines) into a Cart", responses = {
 
 			@ApiResponse(responseCode = "201", description = "Item Added into Cart", content = {
@@ -55,6 +56,23 @@ public class CartController {
 		return appResponseBuilder.success(HttpStatus.CREATED, "Item Added into Cart",
 				cartService.addItemIntoCart(cartId, medicineId, quantity));
 
+	}
+
+	@Operation(summary = "Remove Items from Cart", description = "This endpoint allows us to Remove Items(Medicines) from a Cart", responses = {
+
+			@ApiResponse(responseCode = "200", description = "Item Removed from Cart", content = {
+					@Content(schema = @Schema(implementation = String.class)) }),
+			@ApiResponse(responseCode = "404", description = "Cart Not Found or Invalid Cart ID", content = {
+					@Content(schema = @Schema(implementation = ErrorStructure.class)) }),
+			@ApiResponse(responseCode = "404", description = "Medicine Found or Invalid Medicine Id ", content = {
+					@Content(schema = @Schema(implementation = ErrorStructure.class)) }),
+			@ApiResponse(responseCode = "500", description = "Internal server error", content = {
+					@Content(schema = @Schema(implementation = ErrorStructure.class)) }) })
+	@PostMapping("cart/{cartId}/medicine/{medicineId}/remove")
+	public ResponseEntity<SimpleResponseStructure> removeItemFromCart(@PathVariable String cartId,
+			@PathVariable String medicineId) {
+		return appResponseBuilder.success(HttpStatus.OK, "Item Removed from Cart",
+				cartService.removeItemFromCart(cartId, medicineId));
 	}
 
 }

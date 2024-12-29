@@ -2,6 +2,7 @@ package com.pharma_assist.entity;
 
 import com.pharma_assist.config.GenarateCustomId;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
@@ -20,7 +21,7 @@ public class Item {
 	private double totalPrice;
 
 	@ManyToOne
-	@JoinColumn(name = "cart_id", nullable = false)
+	@JoinColumn(name = "cart_id")
 	private Cart cart;
 
 	@ManyToOne
