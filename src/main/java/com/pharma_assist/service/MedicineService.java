@@ -3,7 +3,6 @@ package com.pharma_assist.service;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -26,7 +25,6 @@ import com.pharma_assist.responses.MedicineResponse;
 import jakarta.validation.Valid;
 
 @Service
-@Transactional
 public class MedicineService {
 	private final MedicineRepository medicineRepository;
 	private final MedicineMapper medicineMapper;
@@ -39,6 +37,7 @@ public class MedicineService {
 		this.pharmacyRepository = pharmacyRepository;
 	}
 
+	@Transactional
 	public String uploadMedicines(MultipartFile file, String pharmacyId) {
 		Pharmacy pharmacy = pharmacyRepository.findById(pharmacyId)
 				.orElseThrow(() -> new PharmacyNotFoundException("Pharmacy Not Found"));
@@ -71,6 +70,7 @@ public class MedicineService {
 		return medicines.stream().map(medicineMapper::medicneToMedicineResponse).toList();
 	}
 
+	@Transactional
 	public Medicine validatedMedicines(Row row) {
 		Medicine medicine = new Medicine();
 		try {

@@ -12,8 +12,6 @@ public class AdminNotFoundException extends RuntimeException {
 		return message;
 	}
 
-	public void setMessage(String message) {
-		this.message = message;
-	}
+	
 
 }

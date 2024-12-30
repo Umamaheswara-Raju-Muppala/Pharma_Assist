@@ -1,15 +1,18 @@
 package com.pharma_assist.entity;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import com.pharma_assist.config.GenarateCustomId;
 import com.pharma_assist.enums.Form;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotBlank;
@@ -53,6 +56,9 @@ public class Medicine {
 
 	@ManyToOne
 	private Pharmacy pharmacy;
+
+	@OneToMany(mappedBy = "medicine", cascade = CascadeType.ALL)
+	private List<Item> items;
 
 	public String getMedicineId() {
 		return medicineId;
@@ -140,6 +146,14 @@ public class Medicine {
 
 	public void setPharmacy(Pharmacy pharmacy) {
 		this.pharmacy = pharmacy;
+	}
+
+	public List<Item> getItems() {
+		return items;
+	}
+
+	public void setItems(List<Item> items) {
+		this.items = items;
 	}
 
 }

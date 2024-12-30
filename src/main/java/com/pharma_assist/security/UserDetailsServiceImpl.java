@@ -5,8 +5,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.pharma_assist.entity.Admin;
-import com.pharma_assist.exceptions.AdminNotFoundException;
 import com.pharma_assist.repository.AdminRepository;
 
 @Service
