@@ -8,9 +8,11 @@ import com.pharma_assist.entity.Medicine;
 import com.pharma_assist.exceptions.CartNotFoundException;
 import com.pharma_assist.exceptions.InsufficientQuantityException;
 import com.pharma_assist.exceptions.MedicineNotFoundException;
+import com.pharma_assist.mapper.CartMapper;
 import com.pharma_assist.repository.CartRepository;
 import com.pharma_assist.repository.ItemRepository;
 import com.pharma_assist.repository.MedicineRepository;
+import com.pharma_assist.responses.CartResponse;
 
 import jakarta.transaction.Transactional;
 
@@ -20,12 +22,14 @@ public class CartService {
 	private final CartRepository cartRepository;
 	private final MedicineRepository medicineRepository;
 	private final ItemRepository itemRepository;
+	private final CartMapper cartMapper;
 
 	public CartService(CartRepository cartRepository, MedicineRepository medicineRepository,
-			ItemRepository itemRepository) {
+			ItemRepository itemRepository, CartMapper cartMapper) {
 		this.cartRepository = cartRepository;
 		this.medicineRepository = medicineRepository;
 		this.itemRepository = itemRepository;
+		this.cartMapper = cartMapper;
 	}
 
 	public String createCart() {
@@ -89,6 +93,12 @@ public class CartService {
 
 		return medicine.getName() + " " + (quantity > 1 ? medicine.getForm() + "s" : medicine.getForm())
 				+ " of quantity " + quantity + " removed from Cart successfully";
+	}
+
+	public CartResponse getCart(String cartId) {
+		return cartRepository.findById(cartId).map(cartMapper::CartToCartResponse)
+				.orElseThrow(() -> new CartNotFoundException("Cart Not Found or Invalid Cart ID " + cartId));
+
 	}
 
 }
