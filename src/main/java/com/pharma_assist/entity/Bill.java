@@ -107,6 +107,5 @@ public class Bill {
 	public void setPurchaceTime(LocalDateTime purchaceTime) {
 		this.purchaceTime = purchaceTime;
 	}
-	
 
 }

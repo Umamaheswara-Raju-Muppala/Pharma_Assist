@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.pharma_assist.config.GenarateCustomId;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
@@ -22,7 +23,7 @@ public class Pharmacy {
 	@OneToMany(mappedBy = "pharmacy")
 	private List<Medicine> medicine;
 
-	@OneToMany(mappedBy = "pharmacy")
+	@OneToMany(mappedBy = "pharmacy", cascade = CascadeType.ALL)
 	private List<Bill> bills;
 
 	public String getPharmacyId() {

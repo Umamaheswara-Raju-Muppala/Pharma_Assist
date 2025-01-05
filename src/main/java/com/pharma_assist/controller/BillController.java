@@ -1,0 +1,45 @@
+package com.pharma_assist.controller;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.pharma_assist.service.BillService;
+import com.pharma_assist.utiliy.AppResponseBuilder;
+import com.pharma_assist.utiliy.ErrorStructure;
+import com.pharma_assist.utiliy.SimpleResponseStructure;
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+
+@RestController
+public class BillController {
+	private final BillService billService;
+	private final AppResponseBuilder appResponseBuilder;
+
+	public BillController(BillService billService, AppResponseBuilder appResponseBuilder) {
+		this.billService = billService;
+		this.appResponseBuilder = appResponseBuilder;
+	}
+
+	@PostMapping("/bills/{cartId}/{phoneNumber}")
+	@Operation(summary = "To Create Bill", description = "This Endpoint allows to create  bill using a valid cartId and patient details", responses = {
+			@ApiResponse(responseCode = "404", description = "Cart Not Found or Invalid Cart ID(CartNotFoundException)", content = {
+					@Content(schema = @Schema(implementation = ErrorStructure.class)) }),
+			@ApiResponse(responseCode = "500", description = "Internal server error", content = {
+					@Content(schema = @Schema(implementation = ErrorStructure.class)) }),
+			@ApiResponse(responseCode = "404", description = "Pharmacy Not Found", content = {
+					@Content(schema = @Schema(implementation = ErrorStructure.class)) }),
+			@ApiResponse(responseCode = "404", description = "Patient Not Found", content = {
+					@Content(schema = @Schema(implementation = ErrorStructure.class)) }) })
+	public ResponseEntity<SimpleResponseStructure> createBill(@PathVariable String cartId,
+			@PathVariable String phoneNumber) {
+		return appResponseBuilder.success(HttpStatus.CREATED, "Bill Created",
+				billService.createBill(cartId, phoneNumber));
+	}
+
+}

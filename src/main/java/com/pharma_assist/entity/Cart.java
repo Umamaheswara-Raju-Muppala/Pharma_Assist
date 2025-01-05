@@ -8,7 +8,6 @@ import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 
 @Entity
 public class Cart {
@@ -19,9 +18,6 @@ public class Cart {
 
 	@OneToMany(mappedBy = "cart", cascade = CascadeType.ALL)
 	private List<Item> items;
-
-	@OneToOne(mappedBy = "cart", cascade = CascadeType.ALL)
-	private Bill bill;
 
 	public void addItem(Item item) {
 		this.items.add(item);
@@ -48,14 +44,6 @@ public class Cart {
 
 	public void setItems(List<Item> items) {
 		this.items = items;
-	}
-
-	public Bill getBill() {
-		return bill;
-	}
-
-	public void setBill(Bill bill) {
-		this.bill = bill;
 	}
 
 }
