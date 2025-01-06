@@ -70,6 +70,19 @@ public class BillService {
 	public String deleteBill(String billId) {
 		Bill bill = billRepository.findById(billId)
 				.orElseThrow(() -> new BillNotFoundException("Bill Not Found/Invalid Bill Id:" + billId));
+
+		Pharmacy pharmacy = bill.getPharmacy();
+		if (pharmacy != null) {
+			pharmacy.getBills().remove(bill);
+			bill.setPharmacy(null);
+		}
+		Patient patient = bill.getPatient();
+		if (patient != null) {
+			patient.getBills().remove(bill);
+			bill.setPatient(null);
+		}
+		bill.setCart(null);
+
 		billRepository.delete(bill);
 		return "Bill Found and Deleted having bill Id:" + billId;
 

@@ -47,11 +47,24 @@ public class BillController {
 				billService.createBill(cartId, phoneNumber));
 	}
 
+	@Operation(summary = "To fetch Bill", description = "This service allows to fetch the bill details using a valid Bill Id", responses = {
+			@ApiResponse(responseCode = "302", description = "Bill Found", content = {
+					@Content(schema = @Schema(implementation = BillResponse.class)) }),
+			@ApiResponse(responseCode = "404", description = "Bill Not Found/Invalid Bill Id", content = {
+					@Content(schema = @Schema(implementation = ErrorStructure.class)) }),
+			@ApiResponse(responseCode = "500", description = "Internal server error", content = {
+					@Content(schema = @Schema(implementation = ErrorStructure.class)) }) })
 	@GetMapping("bills/{billId}")
 	public ResponseEntity<ResponseStructure<BillResponse>> getBill(@PathVariable String billId) {
 		return appResponseBuilder.success(HttpStatus.FOUND, "Bill Found", billService.getBill(billId));
 	}
 
+	@Operation(summary = "To fetch Bill", description = "This service allows to fetch the bill details using a valid Bill Id", responses = {
+			@ApiResponse(responseCode = "200", description = "Bill deleted"),
+			@ApiResponse(responseCode = "404", description = "Bill Not Found/Invalid Bill Id", content = {
+					@Content(schema = @Schema(implementation = ErrorStructure.class)) }),
+			@ApiResponse(responseCode = "500", description = "Internal server error", content = {
+					@Content(schema = @Schema(implementation = ErrorStructure.class)) }) })
 	@DeleteMapping("bills/{billId}")
 	public ResponseEntity<SimpleResponseStructure> deleteBill(@PathVariable String billId) {
 		return appResponseBuilder.success(HttpStatus.OK, "Bill deleted", billService.deleteBill(billId));
