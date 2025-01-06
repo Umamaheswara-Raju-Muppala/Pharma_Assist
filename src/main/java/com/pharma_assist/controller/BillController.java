@@ -2,6 +2,7 @@ package com.pharma_assist.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -41,5 +42,13 @@ public class BillController {
 		return appResponseBuilder.success(HttpStatus.CREATED, "Bill Created",
 				billService.createBill(cartId, phoneNumber));
 	}
+	@DeleteMapping("bills/{billId}")
+	public ResponseEntity<SimpleResponseStructure> deleteBill(@PathVariable String billId) {
+		return appResponseBuilder.success(HttpStatus.OK, "Bill deleted",
+				billService.deleteBill(billId));
+	}
+	
+	
+	
 
 }

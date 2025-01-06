@@ -3,7 +3,11 @@ package com.pharma_assist.service;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import com.pharma_assist.entity.Bill;
 import com.pharma_assist.entity.Cart;
@@ -16,6 +20,7 @@ import com.pharma_assist.exceptions.PharmacyNotFoundException;
 import com.pharma_assist.repository.BillRepository;
 import com.pharma_assist.repository.CartRepository;
 import com.pharma_assist.repository.PatientRepository;
+import com.pharma_assist.utiliy.SimpleResponseStructure;
 
 @Service
 public class BillService {
@@ -50,6 +55,12 @@ public class BillService {
 		billRepository.save(bill);
 		return "BillId:" + bill.getBillId();
 	}
-	
+
+	public String deleteBill(String billId) {
+		Bill bill = billRepository.findById(billId)
+				.orElseThrow(() -> new BillNotFoundException("Bill Not Found/Invalid Bill Id:" + billId));
+		billRepository.delete(bill);
+		return "Bill Found and Deleted having bill Id:" + billId;
+	}
 
 }
