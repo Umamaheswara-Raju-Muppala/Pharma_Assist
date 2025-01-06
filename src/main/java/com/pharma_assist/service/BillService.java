@@ -10,24 +10,29 @@ import com.pharma_assist.entity.Cart;
 import com.pharma_assist.entity.Item;
 import com.pharma_assist.entity.Patient;
 import com.pharma_assist.entity.Pharmacy;
+import com.pharma_assist.exceptions.BillNotFoundException;
 import com.pharma_assist.exceptions.CartNotFoundException;
 import com.pharma_assist.exceptions.PatientNotFoundException;
 import com.pharma_assist.exceptions.PharmacyNotFoundException;
+import com.pharma_assist.mapper.BillMapper;
 import com.pharma_assist.repository.BillRepository;
 import com.pharma_assist.repository.CartRepository;
 import com.pharma_assist.repository.PatientRepository;
+import com.pharma_assist.responses.BillResponse;
 
 @Service
 public class BillService {
 	private final BillRepository billRepository;
 	private final CartRepository cartRepository;
 	private final PatientRepository patientRepository;
+	private final BillMapper billMapper;
 
 	public BillService(BillRepository billRepository, CartRepository cartRepository,
-			PatientRepository patientRepository) {
+			PatientRepository patientRepository, BillMapper billMapper) {
 		this.billRepository = billRepository;
 		this.cartRepository = cartRepository;
 		this.patientRepository = patientRepository;
+		this.billMapper = billMapper;
 	}
 
 	public String createBill(String cartId, String phoneNumber) {
@@ -50,6 +55,11 @@ public class BillService {
 		billRepository.save(bill);
 		return "BillId:" + bill.getBillId();
 	}
-	
+
+	public BillResponse getBill(String billId) {
+
+		return billRepository.findById(billId).map(billMapper::billToBillResponse).orElseThrow(
+				() -> new BillNotFoundException("Invalid Bill Id/Bill Not Found .Try again!! using avalid Bill Id"));
+	}
 
 }

@@ -1,14 +1,18 @@
 package com.pharma_assist.controller;
 
+import org.apache.catalina.connector.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.pharma_assist.responses.BillResponse;
 import com.pharma_assist.service.BillService;
 import com.pharma_assist.utiliy.AppResponseBuilder;
 import com.pharma_assist.utiliy.ErrorStructure;
+import com.pharma_assist.utiliy.ResponseStructure;
 import com.pharma_assist.utiliy.SimpleResponseStructure;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -41,5 +45,8 @@ public class BillController {
 		return appResponseBuilder.success(HttpStatus.CREATED, "Bill Created",
 				billService.createBill(cartId, phoneNumber));
 	}
-
+@GetMapping("bills/{billId}")
+public ResponseEntity<ResponseStructure<BillResponse>> getBill(@PathVariable String billId){
+	return appResponseBuilder.success(HttpStatus.FOUND, "Bill Found", billService.getBill(billId));
+}
 }
