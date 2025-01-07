@@ -48,7 +48,7 @@ public class BillService {
 		Bill bill = new Bill();
 		bill.setGrossAmount(cart.getItems().stream().mapToDouble(Item::getTotalPrice).sum());
 		bill.setGstInPercentage(18.0);
-		bill.setPurchaceTime(LocalDateTime.now());
+		bill.setPurchaseTime(LocalDateTime.now());
 		bill.setTotalPayableAmount(bill.getGrossAmount() + (bill.getGstInPercentage() / 100 * bill.getGrossAmount()));
 		bill.setCart(cart);
 		bill.setPatient(patient);
@@ -59,8 +59,7 @@ public class BillService {
 
 	public BillResponse getBill(String billId) {
 
-		return billRepository.findById(billId).map(billMapper::billToBillResponse).orElseThrow(
-				() -> new BillNotFoundException("Invalid Bill Id/Bill Not Found .Try again!! using avalid Bill Id"));
+		return billMapper.billToBillResponse(fetchBill(billId));
 	}
 
 	public String deleteBill(String billId) {
@@ -92,6 +91,12 @@ public class BillService {
 				() -> new BillNotFoundException("Invalid Bill Id/Bill Not Found. Try again with a valid Bill Id"));
 		return billMapper.billToBillResponse(bill);
 
+	}
+
+	public Bill fetchBill(String billId) {
+
+		return billRepository.findById(billId).orElseThrow(
+				() -> new BillNotFoundException("Invalid Bill Id/Bill Not Found .Try again!! using avalid Bill Id"));
 	}
 
 }

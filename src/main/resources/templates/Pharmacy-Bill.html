@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Pharmacy Receipt</title>
+    <style>
+        body {
+            font-family: 'Helvetica', Arial, sans-serif;
+            margin: 20px;
+            line-height: 1.6;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+
+        /* Header Section */
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 3px solid #4CAF50;
+            padding-bottom: 15px;
+        }
+        .header h2 {
+            color: #4CAF50;
+            font-size: 26px;
+        }
+        .header h3 {
+            color: #666;
+            margin-top: 5px;
+        }
+        .header p {
+            font-size: 14px;
+            color: #555;
+        }
+
+        /* Section Title */
+        .section-title {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #4CAF50;
+            border-bottom: 2px solid #4CAF50;
+            display: inline-block;
+            padding-bottom: 5px;
+        }
+
+        /* Bill Details Table */
+        .bill-details {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .bill-details th, .bill-details td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: center;
+        }
+        .bill-details th {
+            background-color: #4CAF50;
+            color: white;
+            font-size: 16px;
+        }
+        .bill-details tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        .bill-details tr:hover {
+            background-color: #e0f7fa;
+        }
+        .bill-details td {
+            font-size: 14px;
+        }
+
+        /* Total Section */
+        .total-section {
+            margin-top: 30px;
+            text-align: right;
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+        }
+        .total-section .label {
+            margin-right: 10px;
+            color: #555;
+        }
+        .total-section span {
+            color: #4CAF50;
+        }
+
+        /* Footer Section */
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 14px;
+            color: #777;
+        }
+        .footer p {
+            margin: 5px 0;
+        }
+        .footer p:first-child {
+            color: #4CAF50;
+            font-weight: bold;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <div class="header">
+        <h2 th:text="${pharmacyName}">Pharmacy Name</h2>
+        <h3>Pharmacy Receipt</h3>
+        <p>Bill ID: <span th:text="${billId}">12345</span></p>
+        <p>Date: <span th:text="${purchaseTime}">01/01/2025</span></p>
+    </div>
+
+    <!-- Customer Details Section -->
+    <div>
+        <p class="section-title">Patient Details</p>
+        <p><strong>Patient Name:</strong> <span th:text="${patientName}">John Doe</span></p>
+    </div>
+
+    <!-- Bill Details Table -->
+    <div>
+        <p class="section-title">Bill Details</p>
+        <table class="bill-details">
+            <thead>
+                <tr>
+                    <th>Item</th>
+                    <th>Quantity</th>
+                    <th>Dosage</th>
+                    <th>Item Price</th>
+                    <th>Total Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="item : ${items}">
+                    <td th:text="${item.name}">Paracetamol</td>
+                    <td th:text="${item.quantity}">1</td>
+                    <td th:text="${item.dosage}">500mg</td>
+                    <td th:text="${item.itemPrice}">₹10</td>
+                    <td th:text="${item.price}">₹10</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Total Section -->
+    <div class="total-section">
+        <p><span class="label">Total Amount:</span> ₹<span th:text="${grossAmount}">100</span></p>
+        <p><span class="label">Total Payable Amount:</span> ₹<span th:text="${totalPayableAmount}">95</span></p>
+        <p><span class="label">Payment Mode:</span> <span th:text="${paymentType}">Cash</span></p>
+    </div>
+
+    <!-- Footer Section -->
+    <div class="footer">
+        <p>Thank you for your purchase!</p>
+        <p>Visit again.</p>
+    </div>
+</body>
+</html>

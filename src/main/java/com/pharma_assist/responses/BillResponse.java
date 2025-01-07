@@ -12,7 +12,7 @@ public class BillResponse {
 	private double gstInPercentage;
 	private double grossAmount;
 	private double totalPayableAmount;
-	private LocalDateTime purchaceTime;
+	private LocalDateTime purchaseTime;
 	private PayOptions payOptions;
 	private PharmacyResponse pharmacyResponce;
 	private PatientResponse patientResponse;
@@ -23,13 +23,13 @@ public class BillResponse {
 	}
 
 	public BillResponse(String billId, double gstInPercentage, double grossAmount, double totalPayableAmount,
-			LocalDateTime purchaceTime, PayOptions payOptions, PharmacyResponse pharmacyResponce,
+			LocalDateTime purchaseTime, PayOptions payOptions, PharmacyResponse pharmacyResponce,
 			PatientResponse patientResponse, CartResponse cartResponse) {
 		this.billId = billId;
 		this.gstInPercentage = gstInPercentage;
 		this.grossAmount = grossAmount;
 		this.totalPayableAmount = totalPayableAmount;
-		this.purchaceTime = purchaceTime;
+		this.purchaseTime = purchaseTime;
 		this.payOptions = payOptions;
 		this.pharmacyResponce = pharmacyResponce;
 		this.patientResponse = patientResponse;
@@ -76,12 +76,12 @@ public class BillResponse {
 		this.totalPayableAmount = totalPayableAmount;
 	}
 
-	public LocalDateTime getPurchaceTime() {
-		return purchaceTime;
+	public LocalDateTime getPurchaseTime() {
+		return purchaseTime;
 	}
 
-	public void setPurchaceTime(LocalDateTime purchaceTime) {
-		this.purchaceTime = purchaceTime;
+	public void setPurchaceTime(LocalDateTime purchaseTime) {
+		this.purchaseTime = purchaseTime;
 	}
 
 	public PayOptions getPayOptions() {
