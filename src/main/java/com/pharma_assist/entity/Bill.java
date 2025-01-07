@@ -23,7 +23,7 @@ public class Bill {
 	private double gstInPercentage;
 	private double grossAmount;
 	private double totalPayableAmount;
-	private LocalDateTime purchaceTime;
+	private LocalDateTime purchaseTime;
 	@Enumerated(EnumType.STRING)
 	private PayOptions payOptions;
 	@OneToOne(cascade = CascadeType.ALL)
@@ -100,12 +100,12 @@ public class Bill {
 		this.pharmacy = pharmacy;
 	}
 
-	public LocalDateTime getPurchaceTime() {
-		return purchaceTime;
+	public LocalDateTime getPurchaseTime() {
+		return purchaseTime;
 	}
 
-	public void setPurchaceTime(LocalDateTime purchaceTime) {
-		this.purchaceTime = purchaceTime;
+	public void setPurchaseTime(LocalDateTime purchaseTime) {
+		this.purchaseTime = purchaseTime;
 	}
 
 }

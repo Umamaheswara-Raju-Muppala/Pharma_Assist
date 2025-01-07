@@ -20,7 +20,7 @@ public class BillMapper {
 
 	public BillResponse billToBillResponse(Bill bill) {
 		return new BillResponse(bill.getBillId(), bill.getGstInPercentage(), bill.getGrossAmount(),
-				bill.getTotalPayableAmount(), bill.getPurchaceTime(), bill.getPayOptions(),
+				bill.getTotalPayableAmount(), bill.getPurchaseTime(), bill.getPayOptions(),
 				pharmacyMapper.pharmacyToPharmacyResponse(bill.getPharmacy()),
 				patientMapper.patientToPatientResponse(bill.getPatient()),cartMapper.CartToCartResponse(bill.getCart()));
 	}
