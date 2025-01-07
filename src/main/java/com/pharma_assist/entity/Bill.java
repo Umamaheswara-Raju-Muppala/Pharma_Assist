@@ -27,7 +27,7 @@ public class Bill {
 	@Enumerated(EnumType.STRING)
 	private PayOptions payOptions;
 	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "cart_id", nullable = false)
+	@JoinColumn(name = "cart_id",nullable = true)
 	private Cart cart;
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "patient_id", nullable = false)
@@ -107,6 +107,5 @@ public class Bill {
 	public void setPurchaceTime(LocalDateTime purchaceTime) {
 		this.purchaceTime = purchaceTime;
 	}
-	
 
 }

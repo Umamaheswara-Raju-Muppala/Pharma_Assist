@@ -16,6 +16,7 @@ public class BillResponse {
 	private PayOptions payOptions;
 	private PharmacyResponse pharmacyResponce;
 	private PatientResponse patientResponse;
+	private CartResponse cartResponse;
 
 	public BillResponse() {
 
@@ -23,7 +24,7 @@ public class BillResponse {
 
 	public BillResponse(String billId, double gstInPercentage, double grossAmount, double totalPayableAmount,
 			LocalDateTime purchaceTime, PayOptions payOptions, PharmacyResponse pharmacyResponce,
-			PatientResponse patientResponse) {
+			PatientResponse patientResponse, CartResponse cartResponse) {
 		this.billId = billId;
 		this.gstInPercentage = gstInPercentage;
 		this.grossAmount = grossAmount;
@@ -32,6 +33,15 @@ public class BillResponse {
 		this.payOptions = payOptions;
 		this.pharmacyResponce = pharmacyResponce;
 		this.patientResponse = patientResponse;
+		this.cartResponse = cartResponse;
+	}
+
+	public CartResponse getCartResponse() {
+		return cartResponse;
+	}
+
+	public void setCartResponse(CartResponse cartResponse) {
+		this.cartResponse = cartResponse;
 	}
 
 	public String getBillId() {

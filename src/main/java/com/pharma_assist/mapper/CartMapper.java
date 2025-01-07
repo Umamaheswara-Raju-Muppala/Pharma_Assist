@@ -1,12 +1,10 @@
 package com.pharma_assist.mapper;
 
-import java.util.List;
 
 import org.springframework.stereotype.Component;
 
 import com.pharma_assist.entity.Cart;
 import com.pharma_assist.responses.CartResponse;
-import com.pharma_assist.responses.ItemResponse;
 
 @Component
 public class CartMapper {

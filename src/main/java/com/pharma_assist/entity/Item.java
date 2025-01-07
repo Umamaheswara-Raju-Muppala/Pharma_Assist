@@ -2,7 +2,6 @@ package com.pharma_assist.entity;
 
 import com.pharma_assist.config.GenarateCustomId;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
