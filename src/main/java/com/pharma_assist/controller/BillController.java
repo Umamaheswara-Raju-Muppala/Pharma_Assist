@@ -1,14 +1,15 @@
 package com.pharma_assist.controller;
 
-import org.apache.catalina.connector.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.pharma_assist.enums.PayOptions;
 import com.pharma_assist.responses.BillResponse;
 import com.pharma_assist.service.BillService;
 import com.pharma_assist.utiliy.AppResponseBuilder;
@@ -70,4 +71,19 @@ public class BillController {
 		return appResponseBuilder.success(HttpStatus.OK, "Bill deleted", billService.deleteBill(billId));
 	}
 
+	@Operation(summary = "Confirm Bill", description = "This Endpoint is used to confirm the bill", responses = {
+			@ApiResponse(responseCode = "200", description = "Bill Generated Successfully", content = {
+					@Content(schema = @Schema(implementation = BillResponse.class)) }),
+			@ApiResponse(responseCode = "404", description = "Bill Not Found/Invalid Bill Id", content = {
+					@Content(schema = @Schema(implementation = ErrorStructure.class)) }),
+			@ApiResponse(responseCode = "500", description = "Internal server error", content = {
+					@Content(schema = @Schema(implementation = ErrorStructure.class)) }) })
+
+	@PostMapping("bills/{billId}/confirm")
+	public ResponseEntity<ResponseStructure<BillResponse>> confirmBill(@PathVariable String billId,
+			@RequestParam PayOptions paymentType) {
+		return appResponseBuilder.success(HttpStatus.OK, "Bill Generated Successfully",
+				billService.confirmBill(billId, paymentType));
+
+	}
 }

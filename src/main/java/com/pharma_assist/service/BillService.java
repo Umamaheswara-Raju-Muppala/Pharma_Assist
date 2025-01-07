@@ -3,17 +3,14 @@ package com.pharma_assist.service;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import com.pharma_assist.entity.Bill;
 import com.pharma_assist.entity.Cart;
 import com.pharma_assist.entity.Item;
 import com.pharma_assist.entity.Patient;
 import com.pharma_assist.entity.Pharmacy;
+import com.pharma_assist.enums.PayOptions;
 import com.pharma_assist.exceptions.BillNotFoundException;
 import com.pharma_assist.exceptions.CartNotFoundException;
 import com.pharma_assist.exceptions.PatientNotFoundException;
@@ -23,7 +20,6 @@ import com.pharma_assist.repository.BillRepository;
 import com.pharma_assist.repository.CartRepository;
 import com.pharma_assist.repository.PatientRepository;
 import com.pharma_assist.responses.BillResponse;
-import com.pharma_assist.utiliy.SimpleResponseStructure;
 
 @Service
 public class BillService {
@@ -85,6 +81,16 @@ public class BillService {
 
 		billRepository.delete(bill);
 		return "Bill Found and Deleted having bill Id:" + billId;
+
+	}
+
+	public BillResponse confirmBill(String billId, PayOptions paymentType) {
+		Bill bill = billRepository.findById(billId).map(b -> {
+			b.setPayOptions(paymentType);
+			return billRepository.save(b);
+		}).orElseThrow(
+				() -> new BillNotFoundException("Invalid Bill Id/Bill Not Found. Try again with a valid Bill Id"));
+		return billMapper.billToBillResponse(bill);
 
 	}
 
